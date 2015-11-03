@@ -1,0 +1,26 @@
+<!--快捷入口详情页面,author:gaoyang,date:2015-09-23-->
+<div class="detail-area">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5">发布开始时间：</div>
+			<div class="col-md-10">
+				{{shortcut.publishBeginAt}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">发布结束时间：</div>
+			<div class="col-md-10">
+				{{shortcut.publishEndAt}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">图片：</div>
+			<div class="col-md-10">
+				<img width="58" height="58" ng-if="shortcut.picNames" ng-src="{{shortcut.picNames}}"></div>
+			</div>
+		</div>
+	</div>
+	<div  class="btns">
+		<a class="cms-btn cms-btn-lg" ng-click="back()">返回</a>
+	</div>
+</div>

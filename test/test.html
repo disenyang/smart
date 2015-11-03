@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>容易网商品管理后台</title>
+        <script type="text/javascript" src="../jquery.min.js"></script>
+        <script type="text/javascript" src="../smart.js"></script>
+        <script src="../require.js"></script>
+        <script src="test.js"></script>
+    </head>
+    <body>
+        <input model="name" if="show=='11'">
+        <div>${username}</div>
+        <button onclick="changeValue()">显示</button>
+        <table style="width:100%">
+            <tr>
+                <td>姓名</td><td>性别</td>
+            </tr>
+            <tr for="row in rows" if="index==1">
+                <td >${row.name}-${index}</td>
+                <td>${row.sex==0?"男":"女"}</td>
+            </tr>
+        </table>
+    </body>
+</html>
