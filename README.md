@@ -1,22 +1,10 @@
 # smart
 smart.js 前端mvc轻量级框架，原生方式的双向数据绑定，支持表达式，for，if等形式，支持语义标签式开发。立志于前端轻量级mvc开发平台，适合网站开发，微信h5开发，后台管理。根据数据模型一键生成常用代码，生成的代码是标准格式的代码，统一代码风格，让开发只关注于业务逻辑，摒弃之前新增模块试的复制黏贴功能。
 <br>
-1.首先谢谢大家专注～～，下面为大家讲讲smart.js的使用方法。有什么不好的地方请大家指出哦［关注微信号：普淘科技］
+1.首先谢谢大家专注～～，下面为大家讲讲smart.js的使用方法。有什么不好的地方请大家指出哦
 <br>
 2.视图层
-<xmp>
-<!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>smart测试</title>
-        <script type="text/javascript" src="../jquery.min.js"></script>
-        <script type="text/javascript" src="../smart.js"></script>
-        <script src="../require.js"></script>
-        <script src="demo.js"></script>
-    </head>
-    <body>
+<pre>
         <input model="name" if="show=='11'">
         <div>${username}</div>
         <button onclick="changeValue()">显示</button>
@@ -29,9 +17,8 @@ smart.js 前端mvc轻量级框架，原生方式的双向数据绑定，支持�
                 <td>${row.sex==0?"男":"女"}</td>
             </tr>
         </table>
-    </body>
-</html>
-</xmp>
+
+</pre>
 <br>
 3.控制层
 <br>
