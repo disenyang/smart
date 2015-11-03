@@ -39,3 +39,4 @@ $$.controller=function(){
 <br>
 
 就这么简单哦，后续版本会一直更新，请持续关注～～，最新更新我们会在官方微信号上说明［关注微信号：普淘科技］
+<img style='width:100px;height:100px' src='http://7xkce0.com1.z0.glb.clouddn.com/weixin.jpg'>
