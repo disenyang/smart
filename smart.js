@@ -2,16 +2,17 @@ var $$={};
 var fors=[];
 var exps =[];
 var ifs=[];
+var attrExps=[];
 $(function(){
-	var modelMapping = {};
-	//设置元素值
-	function setElementValue(e,v){
+  var modelMapping = {};
+  //设置元素值
+  function setElementValue(e,v){
     if(e.is('input')){
       e.val(v);
     }else{
-    	e.html(v);
+      e.html(v);
     }
-	}
+  }
 
   //声明model变量
   function vars(){
@@ -48,6 +49,26 @@ $(function(){
     }
   }
 
+  //属性表达式解析
+  function attrsParse(attrExps,vars){
+
+    if(vars){
+      eval(vars);
+    }
+    for(var i=0;i<attrExps.length;i++){
+      var e = attrExps[i].element;
+      var attrs = attrExps[i].attrs;
+      for(var j=0;j<attrs.length;j++){
+        var attr = attrs[j];
+        var name = attr.name;
+        var value = attr.value;
+        var ei = value.substring(2,value.indexOf("}"));
+        var r = eval(ei);
+        e.attr(name,r);
+      }
+    }
+  }
+
   //更新表达式
   function updateExpression(){
     vars();
@@ -64,6 +85,7 @@ $(function(){
       forParse(f);
     }
     ifParse(ifs);
+    attrsParse(attrExps);
     for(var i=0;i<exps.length;i++){
       var f= exps[i];
       var element = f.element;
@@ -163,6 +185,7 @@ $(function(){
         cloneElement.html(phtml);
         f.res.push(cloneElement);
         ifParse(getIfs(cloneElement),mvars);
+        attrsParse(getAttrExps(cloneElement),mvars);
         if(lastElement==null){
           beforeElement.after(cloneElement);
         }else{
@@ -199,9 +222,48 @@ $(function(){
     return ifs;
   }
 
+  //获取某个元素的if表达式，包括自身的表达式
+  function getAttrExps(element){
+    var es = element.find("*");
+    
+    es.push(element);
+    
+    var  attrExps= [];
+    for(var i=0;i<es.length;i++){
+      var e = $(es[i]);
+     
+      var exs = [];
+      var list = e.get(0).attributes;
+      for(var j = 0 ; j < list.length ; j++){
+        var name = list[j].name;
+        var value = list[j].value;
+        if(value.indexOf("${")!=-1){
+          exs.push({"name":name,"value":value});
+        }
+      }
+      
+      
+      if(exs.length>0){
+        attrExps.push({"element":e,attrs:exs});
+      }
+     
+      // console.log(express);
+      // var r = eval(express);
+      // if(r){
+      //   e.show();
+      // }else{
+      //   e.hide();
+      // }
+    }
+
+    console.log(attrExps);
+
+    return attrExps;
+  }
 
 
-	function observer(changes){
+
+  function observer(changes){
     changes.forEach(function(change, i){
         console.log('what property changed? ' + change.name);
         console.log('how did it change? ' + change.type);
@@ -210,17 +272,17 @@ $(function(){
         var changeName = change.name;
         var modelElement = modelMapping[changeName];
         if(modelElement){
-        	 var value = change.object[changeName];
-        	 setElementValue(modelElement,value);
+           var value = change.object[changeName];
+           setElementValue(modelElement,value);
            
-    	  }
+        }
         updateExpression();
     });
   };
 
   var models = $("[model]");
   for(var i=0;i<models.length;i++){
-  	var e = $(models[i]);
+    var e = $(models[i]);
     var model = e.attr("model");
     if(e.is('input')){
       (function(m){
@@ -230,9 +292,9 @@ $(function(){
         updateExpression();
       });})(model);
     }
-  	
-  	$$[model]="";
-  	modelMapping[model]=e;
+    
+    $$[model]="";
+    modelMapping[model]=e;
   }
 
   var es = $("[onclick]");
@@ -275,6 +337,8 @@ $(function(){
 
   //if表达式
   ifs = getIfs($("body"));
+
+  attrExps=getAttrExps($("body"));
   
 
   updateExpression();
