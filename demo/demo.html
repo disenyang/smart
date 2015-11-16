@@ -6,20 +6,25 @@
         <title>smart测试</title>
         <script type="text/javascript" src="../jquery.min.js"></script>
         <script type="text/javascript" src="../smart.js"></script>
-        <script src="../require.js"></script>
         <script src="demo.js"></script>
     </head>
     <body>
         <input model="name" if="show=='11'">
-        <div>${username}</div>
+        <div>${username}<span>aaa</span></div>
         <button onclick="changeValue()">显示</button>
         <table style="width:100%">
             <tr>
                 <td>姓名</td><td>性别</td>
             </tr>
-            <tr for="row in rows" if="index==1">
-                <td >${row.name}-${index}</td>
+            <tr for="row in rows" if="index==0">
+                <td>${row.name}-${index}</td>
                 <td>${row.sex==0?"男":"女"}</td>
+                <td>
+                    <div for="low in row.list">
+                        <span>${low.l1}</span>
+                        <span>${low.l2}</span>
+                    </div>
+                </td>
             </tr>
         </table>
     </body>

@@ -544,12 +544,23 @@ function getSaveHtml(config){
 				+"\t<div class=\"container-fluid\">";
 	var columns = config.columns;
     if(config.savePage.columns){
+
+        var columnsDo = [];
+        
     	var saveColumns = config.savePage.columns;
     	var tabCount = 2;
+        if(!saveColumns){
+            columnsDo = columns;
+        }else{
+            for(var i=0;i<saveColumns.length;i++){
+                var name = saveColumns[i];
+                var column = getColumn(columns,name);
+                columnsDo.push(column);
+            }
+        }
 
-    	for(var i=0;i<saveColumns.length;i++){
-    		var name = saveColumns[i];
-    		var column = getColumn(columns,name);
+    	for(var i=0;i<columnsDo.length;i++){
+    		var column = columnsDo[i];
     		console.log(name+"//"+column)
     		if(column !=null){
     			str = str+"\n"+getTabString(tabCount)+"<div class=\"row\">"
@@ -700,10 +711,20 @@ function getDetailHtml(config){
 				+"\t<div class=\"container-fluid\">";
 	var columns = config.columns;
 	var detailColumns = config.detailPage.columns;
+   
 	var tabCount = 2;
-	for(var i=0;i<detailColumns.length;i++){
-		var name = detailColumns[i];
-		var column = getColumn(columns,name);
+    var columnsDo = [];
+    if(!detailColumns){
+        columnsDo = columns;
+    }else{
+        for(var i=0;i<detailColumns.length;i++){
+            var name = detailColumns[i];
+            var column = getColumn(columns,name);
+            columnsDo.push(column);
+        }
+    }
+	for(var i=0;i<columnsDo.length;i++){
+		var column = columnsDo[i];
 		if(column!=null){
 			str = str+"\n"+getTabString(tabCount)+"<div class=\"row\">"
 						+"\n"+getTabString(tabCount+1)+"<div class=\"col-md-5\">"+column.title+"：</div>";
@@ -822,9 +843,22 @@ function getListHtml(config){
     str = str +"\n"+"\t<table class=\"table table-hover\">"
 	var tabCount = 2;
 	str = str +"\n"+getTabString(2)+"<tr>";
-	for(var i=0;i<listColumns.length;i++){
-		var name = listColumns[i];
-		var column = getColumn(columns,name);
+
+     var columnsDo = [];
+    if(!listColumns){
+        columnsDo = columns;
+    }else{
+        for(var i=0;i<listColumns.length;i++){
+            var name = listColumns[i];
+            var column = getColumn(columns,name);
+            columnsDo.push(column);
+        }
+    }
+
+
+	for(var i=0;i<columnsDo.length;i++){
+		
+		var column = columnsDo[i];
 		str = str +"\n"+getTabString(3)+"<td>"+column.title+"</td>";
 	}
     if(config.operate){
@@ -833,9 +867,11 @@ function getListHtml(config){
 	str = str +"\n"+getTabString(2)+"</tr>";
 	str = str +"\n"+getTabString(2)+"<tr ng-repeat=\"row in list\">";
 	
-	for(var i=0;i<listColumns.length;i++){
-		var name = listColumns[i];
-		var column = getColumn(columns,name);
+   
+
+	for(var i=0;i<columnsDo.length;i++){
+		var column  = columnsDo[i];
+	
 		str = str +"\n"+getTabString(3)+"<td>";
 		var tan = 4;
 		if(i==0&&config.detailPage){
